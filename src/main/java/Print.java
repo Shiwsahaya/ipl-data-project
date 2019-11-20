@@ -4,6 +4,17 @@ import java.io.FileReader;
 import java.io.IOException;
 import  java.util.*;
 public class Print {
+    public  static  void noOfMatches(ArrayList<String >list)
+    {
+        int size=list.size();
+        int count=0;
+        for(int i=0;i<size;i++)
+        {
+            if(!list.get(i).equals(""))    //if any row empty in the coloumn then count not increase
+                count++;
+        }
+        System.out.println("1. No. of matched played per year:" +count);
+    }
     public static void noOfWonMatch(ArrayList<String>list)
     {
        // System.out.println(list);
@@ -72,13 +83,15 @@ public class Print {
             String[]fields= line1.split(",");
             String id=fields[0];
             String won=fields[10];
+            String team1=fields[4];
             idList.add(id);
             wonList.add(won);
-            String season=fields[1];
-            String Standard=fields[2];
+            team1List.add(team1);
         }
-        //System.out.println(idList);
+        //System.out.println(team1List);
+        noOfMatches(team1List);
         noOfWonMatch(wonList);
+
 
     }
 
