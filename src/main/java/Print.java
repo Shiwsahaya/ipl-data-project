@@ -9,13 +9,25 @@ public class Print {
     public  static  void noOfMatches(ArrayList<String >list)
     {
         int size=list.size();
-        int count=0;
+        TreeMap<String,Integer>map=new TreeMap<>();
         for(int i=0;i<size;i++)
         {
-            if(!list.get(i).equals(""))    //if any row empty in the coloumn then count not increase
-                count++;
+            if(map.containsKey(list.get(i)))
+            {
+                int tmp=map.get(list.get(i));
+                tmp=tmp+1;
+                map.put(list.get(i),tmp);
+            }
+            else {
+                map.put(list.get(i),1);
+            }
         }
-        System.out.println("1. No. of matched played per year:" +count);
+
+        for (Map.Entry mapElement : map.entrySet()) {
+            String key = (String)mapElement.getKey();
+            int value = ((int)mapElement.getValue());
+            System.out.println("Total match in "+ key + " : " + value);
+        }
     }
 
 
@@ -82,16 +94,68 @@ public class Print {
         }
 
     }
+
+    public  static void topEconomicalBowlers(ArrayList<String>list) throws IOException {
+        int size=list.size();
+        LinkedHashMap<String,Integer>tOver=new LinkedHashMap<String, Integer>();
+        LinkedHashMap<String,Integer>tRun=new LinkedHashMap<String, Integer>();
+        BufferedReader br = new BufferedReader(new FileReader("fileCsv/deliveries.csv"));
+        String line = br.readLine();
+        while ((line = br.readLine()) != null && !line.isEmpty())
+        {
+            String[]fields= line.split(",");
+            String id=fields[0];
+            if(list.contains((id))) {
+                if (tOver.containsKey(fields[8])) {
+                    int tmp = tOver.get(fields[8]);
+                    tmp = tmp + 1;
+                    tOver.put(fields[8], tmp);
+                }
+                else {
+                    tOver.put(fields[8], 1);
+                }
+
+                if(tRun.containsKey(fields[8]))
+                {
+                    int tmp=tRun.get(fields[8]);
+                    int tmp1=Integer.parseInt(fields[17]);
+                    tmp=tmp+tmp1;
+                    tRun.put(fields[8],tmp);
+                }
+                else {
+                    int tmp1=Integer.parseInt(fields[17]);
+                    tRun.put(fields[8],tmp1);
+                }
+            }
+        }
+        int min=Integer.MAX_VALUE;
+        String bowlerName="";
+        int totalOver=0;
+        int totalRun=0;
+        for (Map.Entry mapElement : tRun.entrySet()) {
+            String key = (String)mapElement.getKey();
+            int run = (int)mapElement.getValue();
+            int over=(int)tOver.get(key);
+            if((run/over)<min) {
+                min=run/over;
+                bowlerName=key;
+                totalOver=over;
+                totalRun=run;
+            }
+        }
+        System.out.println("Bowler Name: "+bowlerName);
+        System.out.println("Total No. Over: "+totalOver);
+        System.out.println("Toatal No. Given Run: "+totalRun);
+    }
     public static  void main(String args[]) throws IOException {
         BufferedReader br1 = new BufferedReader(new FileReader("fileCsv/matches.csv"));
         ArrayList<String>team1List=new ArrayList<>();
         ArrayList<String>team2List=new ArrayList<>();
         ArrayList<String>wonList=new ArrayList<>();
         ArrayList<String>session=new ArrayList<>();
-        //for third query
+
         ArrayList<String>id2016=new ArrayList<>();
-        HashMap<String,String>map2=new HashMap<>();
-        //third query end
+        ArrayList<String>id2015=new ArrayList<>();
         String line1 = br1.readLine();
         while ((line1 = br1.readLine()) != null && !line1.isEmpty()) {
             String[]fields= line1.split(",");
@@ -104,6 +168,10 @@ public class Print {
             {
                 id2016.add(id);
             }
+            if(str1.equals("2015"))
+            {
+                id2015.add(id);
+            }
 
             wonList.add(won);
             team1List.add(team1);
@@ -111,7 +179,7 @@ public class Print {
         }
        // System.out.println(id2016);
         System.out.println("1st Query");
-        noOfMatches(team1List);
+        noOfMatches(session);
         System.out.println();
 
 
@@ -123,7 +191,8 @@ public class Print {
         noOfExtraRun(id2016);
         System.out.println();
 
-        
+        System.out.println("4th Query");
+        topEconomicalBowlers(id2015);
 
 
     }
