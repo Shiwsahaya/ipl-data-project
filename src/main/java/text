@@ -72,17 +72,17 @@ public class Print {
             if(list.contains(id))
             {
 
-                if(!map.containsKey(fields[2]))
+                if(!map.containsKey(fields[3]))
                 {
                     int tmp=Integer.parseInt(fields[16]);
-                    map.put(fields[2],tmp);
+                    map.put(fields[3],tmp);
                 }
                 else
                 {
-                    int value=map.get(fields[2]);
+                    int value=map.get(fields[3]);
                     int tmp=Integer.parseInt((fields[16]));
                     tmp=tmp+value;
-                    map.put(fields[2],tmp);
+                    map.put(fields[3],tmp);
                 }
             }
 
@@ -132,7 +132,7 @@ public class Print {
                 }
             }
         }
-        int min=Integer.MAX_VALUE;
+        float min=(float) Integer.MAX_VALUE;
         String bowlerName="";
         int totalOver=0;
         int totalRun=0;
@@ -140,7 +140,8 @@ public class Print {
             String key = (String)mapElement.getKey();
             int run = (int)mapElement.getValue();
             int over=(int)tOver.get(key);
-            int comp=run/over;
+            over=over/6;
+            float comp=(float) run/(float) over;
             if(comp<min) {
                 min=comp;
                 bowlerName=key;
@@ -149,10 +150,11 @@ public class Print {
             }
         }
         System.out.println("Bowler Name: "+bowlerName);
-        System.out.println("Total No. Boll: "+totalOver);
+        System.out.println("Total No. Of Over: "+totalOver);
         System.out.println("Toatal No. Given Run: "+totalRun);
         System.out.println(totalOver);
-        System.out.println(tRun);
+     //   System.out.println(tRun);
+       // System.out.println(tOver);
     }
     public static  void main(String args[]) throws IOException {
         BufferedReader br1 = new BufferedReader(new FileReader("fileCsv/matches.csv"));

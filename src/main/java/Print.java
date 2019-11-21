@@ -2,9 +2,11 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import  java.util.*;
 public class Print {
-    public  static  void noOfMatches(ArrayList<String >list)
+
+    public static TreeMap<String,Integer>noOfMatches(ArrayList<String >list)
     {
         int size=list.size();
         TreeMap<String,Integer>map=new TreeMap<>();
@@ -21,53 +23,42 @@ public class Print {
             }
         }
 
-        System.out.println("----------------------------------");
-        System.out.println("Year\t"+"Total Match");
-        System.out.println("----------------------------------");
-        for (Map.Entry mapElement : map.entrySet()) {
-            String key = (String)mapElement.getKey();
-            int value = ((int)mapElement.getValue());
-            System.out.println(key + "\t" + value);
-        }
+        return map;
     }
 
 
-    public static void noOfWonMatch(ArrayList<String>list)
+    public static TreeMap<String,Integer> noOfWonMatch(ArrayList<String>list)
     {
         int size=list.size();
-        HashMap<String,Integer>map=new HashMap<>();
+        TreeMap<String,Integer>map=new TreeMap<>();
         for(int i=0;i<size;i++)
         {
 
             if((list.get(i)).equals(""))
                 continue;
-                if(!map.containsKey(list.get(i)))
-                {
-                    map.put(list.get(i),1);
-                }
-                else
-                {
-                    int tmp=map.get(list.get(i));
-                    tmp=tmp+1;
-                    map.put(list.get(i),tmp);
-                }
+            if(!map.containsKey(list.get(i)))
+            {
+                map.put(list.get(i),1);
+            }
+            else
+            {
+                int tmp=map.get(list.get(i));
+                tmp=tmp+1;
+                map.put(list.get(i),tmp);
+            }
 
         }
-        for (Map.Entry mapElement : map.entrySet()) {
-            String key = (String)mapElement.getKey();
-            int value = ((int)mapElement.getValue());
-            System.out.println(key + " : " + value);
-        }
+        return map;
     }
 
 
-    public  static void noOfExtraRun(ArrayList<String>list) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader("fileCsv/deliveries.csv"));
-        String line = br.readLine();
-        HashMap<String,Integer>map=new HashMap<>();
-        while ((line = br.readLine()) != null && !line.isEmpty())
+    public  static TreeMap<String,Integer> noOfExtraRun(ArrayList<String>list) throws IOException {
+        BufferedReader deliveries = new BufferedReader(new FileReader("fileCsv/deliveries.csv"));
+        String deliveriesLine = deliveries.readLine();
+        TreeMap<String,Integer>map=new TreeMap<>();
+        while ((deliveriesLine = deliveries.readLine()) != null && !deliveriesLine.isEmpty())
         {
-            String[]fields= line.split(",");
+            String[]fields= deliveriesLine.split(",");
             String id=fields[0];
             if(list.contains(id))
             {
@@ -87,20 +78,15 @@ public class Print {
             }
 
         }
-      //  System.out.println(map);
-        for (Map.Entry mapElement : map.entrySet()) {
-            String key = (String)mapElement.getKey();
-            int value = ((int)mapElement.getValue());
-            System.out.println(key + " : " + value);
-        }
+       return map;
 
     }
 
-    public  static void topEconomicalBowlers(ArrayList<String>list) throws IOException {
+    public  static TreeMap<Float,String> topEconomicalBowlers(ArrayList<String>list,BufferedReader br) throws IOException {
         int size=list.size();
         LinkedHashMap<String,Integer>tOver=new LinkedHashMap<String, Integer>();
         LinkedHashMap<String,Integer>tRun=new LinkedHashMap<String, Integer>();
-        BufferedReader br = new BufferedReader(new FileReader("fileCsv/deliveries.csv"));
+        TreeMap<Float,String>top=new TreeMap<>();
         String line = br.readLine();
         while ((line = br.readLine()) != null && !line.isEmpty())
         {
@@ -132,42 +118,29 @@ public class Print {
                 }
             }
         }
-        float min=(float) Integer.MAX_VALUE;
-        String bowlerName="";
-        int totalOver=0;
-        int totalRun=0;
         for (Map.Entry mapElement : tRun.entrySet()) {
             String key = (String)mapElement.getKey();
             int run = (int)mapElement.getValue();
-            int over=(int)tOver.get(key);
-            over=over/6;
+            float over=(float)tOver.get(key);
+            over=over/(float)6;
             float comp=(float) run/(float) over;
-            if(comp<min) {
-                min=comp;
-                bowlerName=key;
-                totalOver=over;
-                totalRun=run;
-            }
+            top.put(comp,key);
         }
-        System.out.println("Bowler Name: "+bowlerName);
-        System.out.println("Total No. Of Over: "+totalOver);
-        System.out.println("Toatal No. Given Run: "+totalRun);
-        System.out.println(totalOver);
-     //   System.out.println(tRun);
-       // System.out.println(tOver);
+        return top;
     }
     public static  void main(String args[]) throws IOException {
-        BufferedReader br1 = new BufferedReader(new FileReader("fileCsv/matches.csv"));
+        BufferedReader matchesFile = new BufferedReader(new FileReader("fileCsv/matches.csv"));
+        String matchesLine = matchesFile.readLine();
+        BufferedReader deliveries = new BufferedReader(new FileReader("fileCsv/deliveries.csv"));
+        String deliveriesLine = deliveries.readLine();
         ArrayList<String>team1List=new ArrayList<>();
         ArrayList<String>team2List=new ArrayList<>();
         ArrayList<String>wonList=new ArrayList<>();
         ArrayList<String>session=new ArrayList<>();
-
         ArrayList<String>id2016=new ArrayList<>();
         ArrayList<String>id2015=new ArrayList<>();
-        String line1 = br1.readLine();
-        while ((line1 = br1.readLine()) != null && !line1.isEmpty()) {
-            String[]fields= line1.split(",");
+        while ((matchesLine = matchesFile.readLine()) != null && !matchesLine.isEmpty()) {
+            String[]fields= matchesLine.split(",");
             String id=fields[0];
             String ses=fields[1];
             String team1=fields[4];
@@ -186,25 +159,49 @@ public class Print {
             team1List.add(team1);
             session.add(ses);
         }
-       // System.out.println(id2016);
-        System.out.println(" 1st. Number of matches played per year of all the years in IPL.");
-        noOfMatches(session);
-        System.out.println("*****************************************************************************");
-        System.out.println();
+        TreeMap<String,Integer>map=new TreeMap<String, Integer>();
 
-        System.out.println("2nd. Number of matches won of all teams over all the years of IPL");
-        noOfWonMatch(wonList);
+        map=noOfMatches(session);
+        System.out.println("Year\tNoOFMatches");
+        for (Map.Entry mapElement : map.entrySet()) {
+            String key = (String)mapElement.getKey();
+            int value = ((int)mapElement.getValue());
+            System.out.println(key + "\t" + value);
+        }
         System.out.println("*****************************************************************************");
-        System.out.println();
 
-        System.out.println("3rd. For the year 2016 get the extra runs conceded per team.");
-        noOfExtraRun(id2016);
+        System.out.println("TeamName\tNoOfWonMatch");
+        map=noOfWonMatch(wonList);
+        for (Map.Entry mapElement : map.entrySet()) {
+            String key = (String)mapElement.getKey();
+            int value = ((int)mapElement.getValue());
+            System.out.println(key + " : " + value);
+        }
         System.out.println("*****************************************************************************");
-        System.out.println();
 
-        System.out.println("4th. For the year 2015 get the top economical bowlers");
-        topEconomicalBowlers(id2015);
+        System.out.println("TeamName\tGivenExtraRunIn2016");
+        map=noOfExtraRun(id2016);
+        for (Map.Entry mapElement : map.entrySet()) {
+            String key = (String)mapElement.getKey();
+            int value = ((int)mapElement.getValue());
+            System.out.println(key + " : " + value);
+        }
+        System.out.println("*****************************************************************************");
+
+
+        TreeMap<Float,String>economy=new TreeMap<Float, String>();
+        economy=topEconomicalBowlers(id2015,deliveries);
+        int index=0;
+        System.out.println("BowlerName\t Economy");
+        for (Map.Entry mapElement : economy.entrySet()) {
+            float key = (Float)mapElement.getKey();
+            String value = (String)mapElement.getValue();
+            DecimalFormat df = new DecimalFormat("#.##");
+            System.out.println(value + " : " + df.format(key));
+            index++;
+            if(index>10)
+                break;
+        }
         System.out.println("*****************************************************************************");
     }
-
 }
