@@ -6,9 +6,9 @@ class MatchDeliveries {
     private List<String []> fileListDeliveries;
     MatchDeliveries()
     {
-        ReadFile ob=new ReadFile();
-        ob.setFileData(Constants.FILE_DELIVERIES);
-        fileListDeliveries =ob.getFileData();
+        ReadFile readFileObject=new ReadFile();
+        readFileObject.setFileData(Constants.FILE_DELIVERIES);
+        fileListDeliveries =readFileObject.getFileData();
     }
     List<String[]> getDeliveriesFile()
     {
@@ -45,47 +45,47 @@ class MatchDeliveries {
 
     //-----------------top economical bowler start--------------
     static TreeMap<Float,String> topEconomicalBowlers(List<String[]> matchFile,List<String []>deliveriesFile){
-        TreeMap<String ,Integer>tOver=new TreeMap<>();
-        TreeMap<String,Integer>tRun=new TreeMap<>();
-        TreeMap<Float,String>top=new TreeMap<>();
+        TreeMap<String ,Integer>totalOver=new TreeMap<>();
+        TreeMap<String,Integer>totalRun=new TreeMap<>();
+        TreeMap<Float,String>topEconomicBowler=new TreeMap<>();
         ArrayList<String>id2015;
         String Year="2015";
         id2015=getYearId(matchFile,Year);
         for(String[]winner:deliveriesFile)
         {
-            String id=winner[Constants.MATCHES_ID];
-            if(id2015.contains(id))
+            String allYearId=winner[Constants.MATCHES_ID];
+            if(id2015.contains(allYearId))
             {
-                if (tOver.containsKey(winner[Constants.BOWLER_NAME])) {
-                    int tmp = tOver.get(winner[Constants.BOWLER_NAME]);
+                if (totalOver.containsKey(winner[Constants.BOWLER_NAME])) {
+                    int tmp = totalOver.get(winner[Constants.BOWLER_NAME]);
                     tmp = tmp + 1;
-                    tOver.put(winner[Constants.BOWLER_NAME], tmp);
+                    totalOver.put(winner[Constants.BOWLER_NAME], tmp);
                 }
                 else {
-                    tOver.put(winner[Constants.BOWLER_NAME], 1); //over 4 index
+                    totalOver.put(winner[Constants.BOWLER_NAME], 1); //over 4 index
                 }
-                if(tRun.containsKey(winner[Constants.BOWLER_NAME]))
+                if(totalRun.containsKey(winner[Constants.BOWLER_NAME]))
                 {
-                    int tmp=tRun.get(winner[Constants.BOWLER_NAME]);
+                    int tmp=totalRun.get(winner[Constants.BOWLER_NAME]);
                     int tmp1=Integer.parseInt(winner[Constants.TOTAL_RUN]);
                     tmp=tmp+tmp1;
-                    tRun.put(winner[Constants.BOWLER_NAME],tmp);
+                    totalRun.put(winner[Constants.BOWLER_NAME],tmp);
                 }
                 else {
                     int tmp1=Integer.parseInt(winner[Constants.TOTAL_RUN]);
-                    tRun.put(winner[Constants.BOWLER_NAME],tmp1);
+                    totalRun.put(winner[Constants.BOWLER_NAME],tmp1);
                 }
             }
         }
-        for (Map.Entry mapElement : tRun.entrySet()) {
+        for (Map.Entry mapElement : totalRun.entrySet()) {
             String key = (String)mapElement.getKey();
             int run = (int)mapElement.getValue();
-            float over=(float)tOver.get(key);
+            float over=(float)totalOver.get(key);
             over=over/(float)6;
             float comp=(float) run/over;
-            top.put(comp,key);
+            topEconomicBowler.put(comp,key);
         }
-        return top;
+        return topEconomicBowler;
     }
 
     //-----------------top economical bowler end----------------
