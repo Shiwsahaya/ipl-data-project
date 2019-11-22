@@ -16,7 +16,7 @@ class MatchDeliveries {
     }
 
     //-----------------no of extra run start--------------------
-    static TreeMap<String,Integer> noOfExtraRun(List<String[]> matchFile,List<String []>deliveriesFile){
+        TreeMap<String,Integer> noOfExtraRun(List<String[]> matchFile,List<String []>deliveriesFile){
         TreeMap<String,Integer>totalWindOfTeam=new TreeMap<>();
         ArrayList<String>id2016;
         String Year="2016";
@@ -44,7 +44,7 @@ class MatchDeliveries {
     //-----------------no of extra run end----------------------
 
     //-----------------top economical bowler start--------------
-    static TreeMap<Float,String> topEconomicalBowlers(List<String[]> matchFile,List<String []>deliveriesFile){
+        TreeMap<Float,String> topEconomicalBowlers(List<String[]> matchFile,List<String []>deliveriesFile){
         TreeMap<String ,Integer>totalOver=new TreeMap<>();
         TreeMap<String,Integer>totalRun=new TreeMap<>();
         TreeMap<Float,String>topEconomicBowler=new TreeMap<>();

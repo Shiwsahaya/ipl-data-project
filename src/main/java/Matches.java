@@ -15,7 +15,7 @@ class Matches {
         return fileList;
     }
     //-------------------no of matches start-----------------------
-    static TreeMap<String,Integer> noOfMatches(List<String[]> fileList){
+        TreeMap<String,Integer> noOfMatches(List<String[]> fileList){
         TreeMap<String,Integer>map=new TreeMap<>();
         for(String[]record:fileList)
         {
@@ -36,7 +36,7 @@ class Matches {
     //-------------------no of matches end-------------------------
 
     //-------------------no of won matches start-------------------------
-    static TreeMap<String,Integer> noOfWonMatch(List<String[]> fileList){
+        TreeMap<String,Integer> noOfWonMatch(List<String[]> fileList){
         TreeMap<String,Integer>map=new TreeMap<>();
         for(String[]record:fileList)
         {
