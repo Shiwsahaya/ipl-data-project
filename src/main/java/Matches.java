@@ -7,7 +7,8 @@ import java.util.TreeMap;
     {
         String file=Constants.FILE_MATCHES;
         ReadFile ob=new ReadFile();
-        fileList=ob.getFileData(file);
+        ob.setFileData(file);
+        fileList=ob.getFileData();
     }
      List<String[]>getCsvFile()
     {

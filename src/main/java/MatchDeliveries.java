@@ -7,7 +7,8 @@ class MatchDeliveries {
     MatchDeliveries()
     {
         ReadFile ob=new ReadFile();
-        fileListDeliveries =ob.getFileData(Constants.FILE_DELIVERIES);
+        ob.setFileData(Constants.FILE_DELIVERIES);
+        fileListDeliveries =ob.getFileData();
     }
       List<String[]> getDeliveriesFile()
     {

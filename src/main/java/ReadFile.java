@@ -6,21 +6,24 @@ import java.io.IOException;
 import java.util.List;
 
  class ReadFile {
-     List<String[]> getFileData(String file)
-    {
-        List<String[]> fileList=null;
-        CSVReader readerMatch = null;
-        try {
-            readerMatch = new CSVReader(new FileReader(file));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            assert readerMatch != null;
-            fileList=readerMatch.readAll();
-        } catch (IOException | CsvException e) {
-            e.printStackTrace();
-        }
-        return fileList;
-    }
+     private List<String[]> fileList;
+     private CSVReader readerMatch ;
+     public void setFileData(String file)
+     {
+         try {
+             readerMatch = new CSVReader(new FileReader(file));
+         } catch (FileNotFoundException e) {
+             System.out.println("CSV File Not Found");
+         }
+         try {
+             fileList=readerMatch.readAll();
+         } catch (IOException | CsvException e) {
+             System.out.println("Error in CSV File Reading");
+         }
+     }
+     public List<String[]> getFileData()
+     {
+         return fileList;
+     }
+
 }
