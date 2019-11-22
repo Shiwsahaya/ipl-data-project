@@ -3,24 +3,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 class MatchDeliveries {
-    private List<String []>fileListDelveries;
+    private List<String []> fileListDeliveries;
     MatchDeliveries()
     {
         ReadFile ob=new ReadFile();
-        fileListDelveries=ob.getFileData(Constants.FILE_DELIVERIES);
+        fileListDeliveries =ob.getFileData(Constants.FILE_DELIVERIES);
     }
       List<String[]> getDeliveriesFile()
     {
-        return fileListDelveries;
+        return fileListDeliveries;
     }
 
     //-----------------no of extra run start--------------------
-        static TreeMap<String,Integer> noOfExtraRun(List<String[]> matchFile,List<String []>delveryFile){
+        static TreeMap<String,Integer> noOfExtraRun(List<String[]> matchFile,List<String []>deliveriesFile){
         TreeMap<String,Integer>totalWindOfTeam=new TreeMap<>();
         ArrayList<String>id2016;
         String Year="2016";
         id2016=getYearId(matchFile,Year);
-        for(String[]winner:delveryFile)
+        for(String[]winner:deliveriesFile)
         {
             String id=winner[Constants.MATCHES_ID];
             if(id2016.contains(id))
@@ -48,7 +48,8 @@ class MatchDeliveries {
         TreeMap<String,Integer>tRun=new TreeMap<>();
         TreeMap<Float,String>top=new TreeMap<>();
         ArrayList<String>id2015;
-        id2015=getYearId(matchFile,"2015");
+        String Year="2015";
+        id2015=getYearId(matchFile,Year);
         for(String[]winner:deliveriesFile)
         {
             String id=winner[Constants.MATCHES_ID];
