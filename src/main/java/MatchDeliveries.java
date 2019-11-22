@@ -10,13 +10,13 @@ class MatchDeliveries {
         ob.setFileData(Constants.FILE_DELIVERIES);
         fileListDeliveries =ob.getFileData();
     }
-      List<String[]> getDeliveriesFile()
+    List<String[]> getDeliveriesFile()
     {
         return fileListDeliveries;
     }
 
     //-----------------no of extra run start--------------------
-        static TreeMap<String,Integer> noOfExtraRun(List<String[]> matchFile,List<String []>deliveriesFile){
+    static TreeMap<String,Integer> noOfExtraRun(List<String[]> matchFile,List<String []>deliveriesFile){
         TreeMap<String,Integer>totalWindOfTeam=new TreeMap<>();
         ArrayList<String>id2016;
         String Year="2016";
@@ -44,7 +44,7 @@ class MatchDeliveries {
     //-----------------no of extra run end----------------------
 
     //-----------------top economical bowler start--------------
-        static TreeMap<Float,String> topEconomicalBowlers(List<String[]> matchFile,List<String []>deliveriesFile){
+    static TreeMap<Float,String> topEconomicalBowlers(List<String[]> matchFile,List<String []>deliveriesFile){
         TreeMap<String ,Integer>tOver=new TreeMap<>();
         TreeMap<String,Integer>tRun=new TreeMap<>();
         TreeMap<Float,String>top=new TreeMap<>();
@@ -105,6 +105,5 @@ class MatchDeliveries {
     }
     //-----------------for getting id end-----------------------
 
-    }
-
+}
 

@@ -1,7 +1,7 @@
 import java.util.List;
 import java.util.TreeMap;
 
-    class Matches {
+class Matches {
     private  List<String[]> fileList;
     Matches()
     {
@@ -10,25 +10,25 @@ import java.util.TreeMap;
         ob.setFileData(file);
         fileList=ob.getFileData();
     }
-     List<String[]>getCsvFile()
+    List<String[]>getCsvFile()
     {
         return fileList;
     }
     //-------------------no of matches start-----------------------
-     static TreeMap<String,Integer> noOfMatches(List<String[]> fileList){
+    static TreeMap<String,Integer> noOfMatches(List<String[]> fileList){
         TreeMap<String,Integer>map=new TreeMap<>();
         for(String[]record:fileList)
         {
-           if(map.containsKey(record[Constants.SESSION]))
-           {
-               int tmp=map.get(record[Constants.SESSION]);
-               tmp=tmp+1;
-               map.put(record[Constants.SESSION],tmp);
-           }
-           else
-           {
-               map.put(record[Constants.SESSION],1);
-           }
+            if(map.containsKey(record[Constants.SESSION]))
+            {
+                int tmp=map.get(record[Constants.SESSION]);
+                tmp=tmp+1;
+                map.put(record[Constants.SESSION],tmp);
+            }
+            else
+            {
+                map.put(record[Constants.SESSION],1);
+            }
         }
         return  map;
 
@@ -36,7 +36,7 @@ import java.util.TreeMap;
     //-------------------no of matches end-------------------------
 
     //-------------------no of won matches start-------------------------
-     static TreeMap<String,Integer> noOfWonMatch(List<String[]> fileList){
+    static TreeMap<String,Integer> noOfWonMatch(List<String[]> fileList){
         TreeMap<String,Integer>map=new TreeMap<>();
         for(String[]record:fileList)
         {
