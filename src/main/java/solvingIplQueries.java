@@ -4,14 +4,13 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class solvingIplQueries {
-    public static void main(String args[])
+    public static void main(String arg[])
     {
         Matches m=new Matches();
         MatchDeliveries MD=new MatchDeliveries();
         List<String[]> fileList=m.getCsvFile();
-        List<String []>deliveriFile=MD.getDelveiesFile();
-
-        TreeMap<String,Integer>map=new TreeMap<String, Integer>();
+        List<String []>deliveries=MD.getDeliveriesFile();
+        TreeMap<String,Integer>map;
         map=m.noOfMatches(fileList);
         for (Map.Entry mapElement : map.entrySet()) {
             String key = (String)mapElement.getKey();
@@ -30,7 +29,7 @@ public class solvingIplQueries {
         System.out.println("*****************************************************************************");
 
 
-        map=MD.noOfExtraRun(fileList,deliveriFile);
+        map=MD.noOfExtraRun(fileList,deliveries);
         System.out.println("TeamName\tGivenExtraRunIn2016");
         for (Map.Entry mapElement : map.entrySet()) {
             String key = (String)mapElement.getKey();
@@ -40,8 +39,8 @@ public class solvingIplQueries {
         System.out.println("*****************************************************************************");
 
 
-        TreeMap<Float,String>economy=new TreeMap<>();
-        economy=MD.topEconomicalBowlers(fileList,deliveriFile);
+        TreeMap<Float,String>economy;
+        economy=MD.topEconomicalBowlers(fileList,deliveries);
         int index=0;
         System.out.println("BowlerName\t Economy");
         for (Map.Entry mapElement : economy.entrySet()) {

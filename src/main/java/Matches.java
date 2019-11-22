@@ -1,40 +1,32 @@
 import java.util.List;
 import java.util.TreeMap;
 
-public class Matches {
-    static int winnerTeamColumn=10;
-    static int sessionColumn=1;
-    static int matchesId=0;
-    static int bowlingTeam=3;
-    static int extraRun=16;
-    static int bowler=8;
-    static int totalRun=17;
-
-    private  List<String[]> fileList=null;
+    class Matches {
+    private  List<String[]> fileList;
     Matches()
     {
-        String file="matches.csv";
+        String file=Constants.FILE_MATCHES;
         ReadFile ob=new ReadFile();
         fileList=ob.getFileData(file);
     }
-    public List<String[]>getCsvFile()
+     List<String[]>getCsvFile()
     {
         return fileList;
     }
     //-------------------no of matches start-----------------------
-    public static TreeMap<String,Integer> noOfMatches(List<String[]> fileList){
+     static TreeMap<String,Integer> noOfMatches(List<String[]> fileList){
         TreeMap<String,Integer>map=new TreeMap<>();
         for(String[]record:fileList)
         {
-           if(map.containsKey(record[sessionColumn]))
+           if(map.containsKey(record[Constants.SESSION]))
            {
-               int tmp=map.get(record[sessionColumn]);
+               int tmp=map.get(record[Constants.SESSION]);
                tmp=tmp+1;
-               map.put(record[sessionColumn],tmp);
+               map.put(record[Constants.SESSION],tmp);
            }
            else
            {
-               map.put(record[sessionColumn],1);
+               map.put(record[Constants.SESSION],1);
            }
         }
         return  map;
@@ -43,21 +35,21 @@ public class Matches {
     //-------------------no of matches end-------------------------
 
     //-------------------no of won matches start-------------------------
-    public static TreeMap<String,Integer> noOfWonMatch(List<String[]> fileList){
+     static TreeMap<String,Integer> noOfWonMatch(List<String[]> fileList){
         TreeMap<String,Integer>map=new TreeMap<>();
         for(String[]record:fileList)
         {
-            if(record[winnerTeamColumn].equals(""))
+            if(record[Constants.WINNER_TEAM].equals(""))
                 continue;
-            if(map.containsKey(record[winnerTeamColumn]))
+            if(map.containsKey(record[Constants.WINNER_TEAM]))
             {
-                int tmp=map.get(record[winnerTeamColumn]);
+                int tmp=map.get(record[Constants.WINNER_TEAM]);
                 tmp=tmp+1;
-                map.put(record[winnerTeamColumn],tmp);
+                map.put(record[Constants.WINNER_TEAM],tmp);
             }
             else
             {
-                map.put(record[winnerTeamColumn],1);
+                map.put(record[Constants.WINNER_TEAM],1);
             }
         }
         return  map;

@@ -5,8 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
-public class ReadFile {
-    public List<String[]> getFileData(String file)
+ class ReadFile {
+     List<String[]> getFileData(String file)
     {
         List<String[]> fileList=null;
         CSVReader readerMatch = null;
@@ -16,10 +16,9 @@ public class ReadFile {
             e.printStackTrace();
         }
         try {
+            assert readerMatch != null;
             fileList=readerMatch.readAll();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (CsvException e) {
+        } catch (IOException | CsvException e) {
             e.printStackTrace();
         }
         return fileList;

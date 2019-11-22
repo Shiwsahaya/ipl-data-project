@@ -2,52 +2,39 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-public class MatchDeliveries {
-    private List<String[]> fileListMatch=null;
-    private List<String []>fileListDelveries=null;
-    static int matchesId=0;
-    static int bowlingTeam=3;
-    static int extraRun=16;
-    static int bowler=8;
-    static int sessionColumn=1;
-    static int totalRun=17;
-    static String fileMatches="matches.csv";
-    static String fileDelveries="deliveries.csv";
+class MatchDeliveries {
+    private List<String []>fileListDelveries;
     MatchDeliveries()
     {
         ReadFile ob=new ReadFile();
-        fileListMatch=ob.getFileData(fileMatches);
-        fileListDelveries=ob.getFileData(fileDelveries);
+        fileListDelveries=ob.getFileData(Constants.FILE_DELIVERIES);
     }
-    public List<String[]>getCsvFile()
-    {
-        return fileListMatch;
-    }
-    public List<String[]>getDelveiesFile()
+      List<String[]> getDeliveriesFile()
     {
         return fileListDelveries;
     }
 
     //-----------------no of extra run start--------------------
-    public static TreeMap<String,Integer> noOfExtraRun(List<String[]> matchFile,List<String []>delveryFile){
+        static TreeMap<String,Integer> noOfExtraRun(List<String[]> matchFile,List<String []>delveryFile){
         TreeMap<String,Integer>totalWindOfTeam=new TreeMap<>();
-        ArrayList<String>id2016=new ArrayList<>();
-        id2016=getYearId(matchFile,"2016");
+        ArrayList<String>id2016;
+        String Year="2016";
+        id2016=getYearId(matchFile,Year);
         for(String[]winner:delveryFile)
         {
-            String id=winner[matchesId];
+            String id=winner[Constants.MATCHES_ID];
             if(id2016.contains(id))
             {
-                if(!totalWindOfTeam.containsKey(winner[bowlingTeam]))
+                if(!totalWindOfTeam.containsKey(winner[Constants.BOWLING_TEAM]))
                 {
-                    int tmp=Integer.parseInt(winner[extraRun]);
-                    totalWindOfTeam.put(winner[bowlingTeam],tmp);
+                    int tmp=Integer.parseInt(winner[Constants.EXTRA_RUN]);
+                    totalWindOfTeam.put(winner[Constants.BOWLING_TEAM],tmp);
                 }
                 else {
-                    int value=totalWindOfTeam.get(winner[bowlingTeam]);
-                    int tmp=Integer.parseInt(winner[extraRun]);
+                    int value=totalWindOfTeam.get(winner[Constants.BOWLING_TEAM]);
+                    int tmp=Integer.parseInt(winner[Constants.EXTRA_RUN]);
                     tmp=tmp+value;
-                    totalWindOfTeam.put(winner[bowlingTeam],tmp);
+                    totalWindOfTeam.put(winner[Constants.BOWLING_TEAM],tmp);
                 }
             }
         }
@@ -56,35 +43,35 @@ public class MatchDeliveries {
     //-----------------no of extra run end----------------------
 
     //-----------------top economical bowler start--------------
-    public static TreeMap<Float,String> topEconomicalBowlers(List<String[]> matchFile,List<String []>deliveriesFile){
+        static TreeMap<Float,String> topEconomicalBowlers(List<String[]> matchFile,List<String []>deliveriesFile){
         TreeMap<String ,Integer>tOver=new TreeMap<>();
         TreeMap<String,Integer>tRun=new TreeMap<>();
         TreeMap<Float,String>top=new TreeMap<>();
-        ArrayList<String>id2015=new ArrayList<>();
+        ArrayList<String>id2015;
         id2015=getYearId(matchFile,"2015");
         for(String[]winner:deliveriesFile)
         {
-            String id=winner[matchesId];
+            String id=winner[Constants.MATCHES_ID];
             if(id2015.contains(id))
             {
-                if (tOver.containsKey(winner[bowler])) {
-                    int tmp = tOver.get(winner[bowler]);
+                if (tOver.containsKey(winner[Constants.BOWLER_NAME])) {
+                    int tmp = tOver.get(winner[Constants.BOWLER_NAME]);
                     tmp = tmp + 1;
-                    tOver.put(winner[bowler], tmp);
+                    tOver.put(winner[Constants.BOWLER_NAME], tmp);
                 }
                 else {
-                    tOver.put(winner[bowler], 1); //over 4 index
+                    tOver.put(winner[Constants.BOWLER_NAME], 1); //over 4 index
                 }
-                if(tRun.containsKey(winner[bowler]))
+                if(tRun.containsKey(winner[Constants.BOWLER_NAME]))
                 {
-                    int tmp=tRun.get(winner[bowler]);
-                    int tmp1=Integer.parseInt(winner[totalRun]);
+                    int tmp=tRun.get(winner[Constants.BOWLER_NAME]);
+                    int tmp1=Integer.parseInt(winner[Constants.TOTAL_RUN]);
                     tmp=tmp+tmp1;
-                    tRun.put(winner[bowler],tmp);
+                    tRun.put(winner[Constants.BOWLER_NAME],tmp);
                 }
                 else {
-                    int tmp1=Integer.parseInt(winner[totalRun]);
-                    tRun.put(winner[bowler],tmp1);
+                    int tmp1=Integer.parseInt(winner[Constants.TOTAL_RUN]);
+                    tRun.put(winner[Constants.BOWLER_NAME],tmp1);
                 }
             }
         }
@@ -93,7 +80,7 @@ public class MatchDeliveries {
             int run = (int)mapElement.getValue();
             float over=(float)tOver.get(key);
             over=over/(float)6;
-            float comp=(float) run/(float) over;
+            float comp=(float) run/over;
             top.put(comp,key);
         }
         return top;
@@ -103,13 +90,13 @@ public class MatchDeliveries {
 
 
     //-----------------for getting id start---------------------
-    public static ArrayList<String>getYearId(List<String[]> matchFile,String year)
+    private static ArrayList<String>getYearId(List<String[]> matchFile,String year)
     {
         ArrayList<String>id=new ArrayList<>();
         for(String[]winner:matchFile)
         {
-            String yearId=winner[matchesId];
-            if(winner[sessionColumn].equals(year))
+            String yearId=winner[Constants.MATCHES_ID];
+            if(winner[Constants.SESSION].equals(year))
                 id.add(yearId);
         }
         return id;
