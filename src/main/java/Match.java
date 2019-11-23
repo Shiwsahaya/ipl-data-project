@@ -1,17 +1,16 @@
-import java.util.List;
 class Match {
-    private int id;
+    private int matchId;
     private int session;
     private String bowlingTeam;
-    private String bowler;
+    private String bowlerName;
     private String winnerTeam;
 
-    public int getId() {
-        return id;
+    public int getMatchId() {
+        return matchId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setMatchId(int matchId) {
+        this.matchId = matchId;
     }
 
     public int getSession() {
@@ -30,12 +29,12 @@ class Match {
         this.bowlingTeam = bowlingTeam;
     }
 
-    public String getBowler() {
-        return bowler;
+    public String getBowlerName() {
+        return bowlerName;
     }
 
-    public void setBowler(String bowler) {
-        this.bowler = bowler;
+    public void setBowlerName(String bowlerName) {
+        this.bowlerName = bowlerName;
     }
 
     public String getWinnerTeam() {

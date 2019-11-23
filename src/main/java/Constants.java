@@ -6,8 +6,8 @@ public final class Constants {
      static final int WINNER_TEAM=10;
      static final int EXTRA_RUN=16;
      static final int TOTAL_RUN=17;
-     static final String FILE_MATCHES="matches.csv";
-     static final String FILE_DELIVERIES="deliveries.csv";
+     static final String FILE_MATCHES="csvFile/matches.csv";
+     static final String FILE_DELIVERIES="csvFile/deliveries.csv";
      static final int Year2015=2015;
      static final int Year2016=2016;
 }

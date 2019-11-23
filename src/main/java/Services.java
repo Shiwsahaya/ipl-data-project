@@ -1,8 +1,9 @@
+import java.text.DecimalFormat;
 import java.util.*;
-
 class Services {
 
     //-------------------no of matches start----------------------
+
     TreeMap<String, Integer> noOfMatches (List<Match> matchList){
         TreeMap<String, Integer> map = new TreeMap<>();
         matchList.forEach(match -> {
@@ -19,17 +20,17 @@ class Services {
         });
         return map;
     }
+
     //-------------------no of matches end-------------------------
 
 
     //-------------------no of won matches start-------------------------
+
     TreeMap<String, Integer> noOfWonMatches (List<Match> matchList){
         TreeMap<String, Integer> map = new TreeMap<>();
         matchList.forEach(match -> {
-            //System.out.println(match.getSession());
-            if(match.getWinnerTeam().equals(""))
-                ;
-            else {
+            if(!match.getWinnerTeam().equals(""))
+            {
                 if (map.containsKey(match.getWinnerTeam())) {
                     int tmpValue = map.get(match.getWinnerTeam());
                     map.put(match.getWinnerTeam(), tmpValue + 1);
@@ -44,15 +45,17 @@ class Services {
 
     //-------------------no of won matches end---------------------------
 
+
     // -----------------no of extra run start--------------------
+
         TreeMap<String, Integer> noOfExtraRun (List<Match> matchList,List<Deliveries>deliveriesList){
         TreeMap<String,Integer>totalWindOfTeam=new TreeMap<>();
         ArrayList<Integer> id2016;
         int Year=Constants.Year2016;
         id2016=getYearId(matchList,Year);
         deliveriesList.forEach(deliveries -> {
-            int id=deliveries.getId();
-            if(id2016.contains(id))
+            int matchId=deliveries.getDeliveriesId();
+            if(id2016.contains(matchId))
             {
                 if(!totalWindOfTeam.containsKey(deliveries.getBowlingTeam()))
                 {
@@ -70,10 +73,12 @@ class Services {
         });
         return totalWindOfTeam;
     }
+
     //-----------------no of extra run end----------------------
 
 
    //-----------------top economical bowler start--------------
+
    TreeMap<Float, String> topEconomicalBowlers (List<Match> matchList,List<Deliveries>deliveriesList){
        TreeMap<Float,String>topEconomicBowler=new TreeMap<>();
        TreeMap<String ,Integer>totalOver=new TreeMap<>();
@@ -82,54 +87,57 @@ class Services {
        int Year=Constants.Year2015;
        id2015=getYearId(matchList,Year);
        deliveriesList.forEach(deliveries -> {
-           int id=deliveries.getId();
+           int id=deliveries.getDeliveriesId();
            if(id2015.contains(id))
            {
-               if(totalOver.containsKey(deliveries.getBowler()))
+               if(totalOver.containsKey(deliveries.getBowlerName()))
                {
-                   int tmp=totalOver.get(deliveries.getBowler());
+                   int tmp=totalOver.get(deliveries.getBowlerName());
                    tmp=tmp+1;
-                   totalOver.put(deliveries.getBowler(),tmp);
+                   totalOver.put(deliveries.getBowlerName(),tmp);
                }
                else
                {
-                   totalOver.put(deliveries.getBowler(),1);
+                   totalOver.put(deliveries.getBowlerName(),1);
                }
 
-               if(totalRun.containsKey(deliveries.getBowler()))
+               if(totalRun.containsKey(deliveries.getBowlerName()))
                {
-                   int tmp=totalRun.get(deliveries.getBowler());
+                   int tmp=totalRun.get(deliveries.getBowlerName());
                    int tmpValue=deliveries.getTotalRun();
                    tmp=tmp+tmpValue;
-                   totalRun.put(deliveries.getBowler(),tmp);
+                   totalRun.put(deliveries.getBowlerName(),tmp);
                }
                else
                {
                    int tmp1=deliveries.getTotalRun();
-                   totalRun.put(deliveries.getBowler(),tmp1);
+                   totalRun.put(deliveries.getBowlerName(),tmp1);
                }
            }
        });
 
        for (Map.Entry mapElement : totalRun.entrySet()) {
-           String key = (String)mapElement.getKey();
-           int run = (int)mapElement.getValue();
-           float over=(float)totalOver.get(key);
-           over=over/(float)6;
-           float comp=(float) run/over;
-           topEconomicBowler.put(comp,key);
+               String key = (String) mapElement.getKey();
+               int run = (int) mapElement.getValue();
+               float over = (float) totalOver.get(key);
+               over = over / (float) 6;
+               float averageEconomy = (float) run / over;
+               DecimalFormat df = new DecimalFormat("#.##"); //for taking decimal on two point
+               String avgEcoOnTwoPointDecimal = df.format(averageEconomy);
+               topEconomicBowler.put(Float.parseFloat(avgEcoOnTwoPointDecimal), key);
        }
        return topEconomicBowler;
    }
 
-//    //-----------------top economical bowler end----------------
+    //-----------------top economical bowler end----------------
 
-//    //-----------------for getting id start---------------------
-    private static ArrayList<Integer>getYearId(List<Match> matchFile,int year)
+
+    //-----------------for getting id start---------------------
+    private static ArrayList<Integer>getYearId(List<Match> file,int year)
     {
         ArrayList<Integer>id=new ArrayList<>();
-        matchFile.forEach(match -> {
-            int yearId=match.getId();
+        file.forEach(match -> {
+            int yearId=match.getMatchId();
             if(match.getSession()==year)
             {
                 id.add(yearId);
