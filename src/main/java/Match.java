@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 class Match {
     private int matchId;
     private int session;
@@ -12,22 +11,6 @@ class Match {
 
     public void setMatchId(int matchId) {
         this.matchId = matchId;
-=======
-import java.util.List;
-class Match {
-    private int id;
-    private int session;
-    private String bowlingTeam;
-    private String bowler;
-    private String winnerTeam;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
->>>>>>> 4c9a1f5bf33bace51e28449a1b3633bfe87dd035
     }
 
     public int getSession() {
@@ -46,21 +29,12 @@ class Match {
         this.bowlingTeam = bowlingTeam;
     }
 
-<<<<<<< HEAD
     public String getBowlerName() {
         return bowlerName;
     }
 
     public void setBowlerName(String bowlerName) {
         this.bowlerName = bowlerName;
-=======
-    public String getBowler() {
-        return bowler;
-    }
-
-    public void setBowler(String bowler) {
-        this.bowler = bowler;
->>>>>>> 4c9a1f5bf33bace51e28449a1b3633bfe87dd035
     }
 
     public String getWinnerTeam() {

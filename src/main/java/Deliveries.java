@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 class Deliveries {
     private int deliveriesId;
     private String bowlingTeam;
@@ -12,22 +11,6 @@ class Deliveries {
 
     public void setDeliveriesId(int deliveriesId) {
         this.deliveriesId = deliveriesId;
-=======
-import java.util.List;
-class Deliveries {
-    private int id;
-    private String bowlingTeam;
-    private String bowler;
-    private int extraRun;
-    private int totalRun;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
->>>>>>> 4c9a1f5bf33bace51e28449a1b3633bfe87dd035
     }
 
     public String getBowlingTeam() {
@@ -38,21 +21,12 @@ class Deliveries {
         this.bowlingTeam = bowlingTeam;
     }
 
-<<<<<<< HEAD
     public String getBowlerName() {
         return bowlerName;
     }
 
     public void setBowlerName(String bowlerName) {
         this.bowlerName = bowlerName;
-=======
-    public String getBowler() {
-        return bowler;
-    }
-
-    public void setBowler(String bowler) {
-        this.bowler = bowler;
->>>>>>> 4c9a1f5bf33bace51e28449a1b3633bfe87dd035
     }
 
     public int getExtraRun() {
