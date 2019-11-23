@@ -8,7 +8,7 @@ import java.util.List;
 class ReadFile {
     private List<String[]> fileList;
     private CSVReader csvReader;
-    public void setFileData(String file)
+    void setFileData(String file)
     {
         try {
             csvReader = new CSVReader(new FileReader(file));
@@ -22,7 +22,7 @@ class ReadFile {
             System.out.println("Error in CSV File Reading");
         }
     }
-    public List<String[]> getFileData()
+    List<String[]> getFileData()
     {
         return fileList;
     }

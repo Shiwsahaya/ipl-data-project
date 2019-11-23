@@ -2,23 +2,48 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-class MatchDeliveries {
-    private List<String []> fileListDeliveries;
-    MatchDeliveries()
-    {
-        ReadFile readFileObject=new ReadFile();
-        readFileObject.setFileData(Constants.FILE_DELIVERIES);
-        fileListDeliveries =readFileObject.getFileData();
+
+class IplMethods {
+    //-------------------no of matches start----------------------
+    TreeMap<String, Integer> noOfMatches (List < String[]>fileList){
+        TreeMap<String, Integer> map = new TreeMap<>();
+        for (String[] record : fileList) {
+            if (map.containsKey(record[Constants.SESSION])) {
+                int tmp = map.get(record[Constants.SESSION]);
+                tmp = tmp + 1;
+                map.put(record[Constants.SESSION], tmp);
+            } else {
+                map.put(record[Constants.SESSION], 1);
+            }
+        }
+        return map;
+
     }
-    List<String[]> getDeliveriesFile()
-    {
-        return fileListDeliveries;
+    //-------------------no of matches end-------------------------
+
+    //-------------------no of won matches start-------------------------
+    TreeMap<String, Integer> noOfWonMatch (List < String[]>fileList){
+        TreeMap<String, Integer> map = new TreeMap<>();
+        for (String[] record : fileList) {
+            if (record[Constants.WINNER_TEAM].equals(""))
+                continue;
+            if (map.containsKey(record[Constants.WINNER_TEAM])) {
+                int tmp = map.get(record[Constants.WINNER_TEAM]);
+                tmp = tmp + 1;
+                map.put(record[Constants.WINNER_TEAM], tmp);
+            } else {
+                map.put(record[Constants.WINNER_TEAM], 1);
+            }
+        }
+        return map;
+
     }
+    //-------------------no of won matches end---------------------------
 
     //-----------------no of extra run start--------------------
-        TreeMap<String,Integer> noOfExtraRun(List<String[]> matchFile,List<String []>deliveriesFile){
+    TreeMap<String,Integer> noOfExtraRun(List<String[]> matchFile,List<String []>deliveriesFile){
         TreeMap<String,Integer>totalWindOfTeam=new TreeMap<>();
-        ArrayList<String>id2016;
+        ArrayList<String> id2016;
         String Year="2016";
         id2016=getYearId(matchFile,Year);
         for(String[]winner:deliveriesFile)
@@ -44,7 +69,7 @@ class MatchDeliveries {
     //-----------------no of extra run end----------------------
 
     //-----------------top economical bowler start--------------
-        TreeMap<Float,String> topEconomicalBowlers(List<String[]> matchFile,List<String []>deliveriesFile){
+    TreeMap<Float,String> topEconomicalBowlers(List<String[]> matchFile,List<String []>deliveriesFile){
         TreeMap<String ,Integer>totalOver=new TreeMap<>();
         TreeMap<String,Integer>totalRun=new TreeMap<>();
         TreeMap<Float,String>topEconomicBowler=new TreeMap<>();
@@ -105,5 +130,9 @@ class MatchDeliveries {
     }
     //-----------------for getting id end-----------------------
 
-}
 
+    public static void main(String[]args) {
+
+
+    }
+}

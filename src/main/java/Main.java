@@ -3,32 +3,42 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class SolvingIplQueries {
-    public static void main(String[] arg)
-    {
-        Matches matchClassObject=new Matches();
-        MatchDeliveries matchDeliveriesClassObject=new MatchDeliveries();
-        List<String[]> fileList=matchClassObject.getCsvFile();
-        List<String []>deliveries=matchDeliveriesClassObject.getDeliveriesFile();
-        TreeMap<String,Integer>mapForResult;
-        mapForResult=matchClassObject.noOfMatches(fileList);
+public class Main {
+    public static void main(String[] arg) {
+        TreeMap<String, Integer> mapForResult;
+
+        String matchesFile = Constants.FILE_MATCHES;
+        List<String[]> matchFileList;
+        Match matchClassObject = new Match();
+        matchClassObject.setFile(matchesFile);
+        matchFileList = matchClassObject.getMatchFileData();
+
+        String deliveriesFile = Constants.FILE_DELIVERIES;
+        List<String[]> deliveriesFileList;
+        Deliveries deliveriesClassObject = new Deliveries();
+        deliveriesClassObject.setFile(deliveriesFile);
+        deliveriesFileList = deliveriesClassObject.getMatchFileData();
+
+        IplMethods iplMethodObject = new IplMethods();
+
+        mapForResult = iplMethodObject.noOfMatches(matchFileList);
         for (Map.Entry mapElement : mapForResult.entrySet()) {
-            String key = (String)mapElement.getKey();
-            int value = ((int)mapElement.getValue());
-            System.out.println("In "+key+" Total Played Match: " + value);
+            String key = (String) mapElement.getKey();
+            int value = ((int) mapElement.getValue());
+            System.out.println("In " + key + " Total Played Match: " + value);
         }
         System.out.println("*****************************************************************************");
 
-        mapForResult=matchClassObject.noOfWonMatch(fileList);
+        mapForResult = iplMethodObject.noOfWonMatch(matchFileList);
         for (Map.Entry mapElement : mapForResult.entrySet()) {
-            String key = (String)mapElement.getKey();
-            int value = ((int)mapElement.getValue());
+            String key = (String) mapElement.getKey();
+            int value = ((int) mapElement.getValue());
             System.out.println(key + " Total Win Match: " + value);
         }
         System.out.println("*****************************************************************************");
 
 
-        mapForResult=matchDeliveriesClassObject.noOfExtraRun(fileList,deliveries);
+        mapForResult = iplMethodObject.noOfExtraRun(matchFileList,deliveriesFileList);
         for (Map.Entry mapElement : mapForResult.entrySet()) {
             String key = (String)mapElement.getKey();
             int value = ((int)mapElement.getValue());
@@ -36,9 +46,8 @@ public class SolvingIplQueries {
         }
         System.out.println("*****************************************************************************");
 
-
         TreeMap<Float,String>topEconomicBowlersResult;
-        topEconomicBowlersResult=matchDeliveriesClassObject.topEconomicalBowlers(fileList,deliveries);
+        topEconomicBowlersResult= iplMethodObject.topEconomicalBowlers(matchFileList,deliveriesFileList);
         int index=0;
         for (Map.Entry mapElement : topEconomicBowlersResult.entrySet()) {
             float key = (Float)mapElement.getKey();
@@ -50,5 +59,10 @@ public class SolvingIplQueries {
                 break;
         }
         System.out.println("*****************************************************************************");
+
+
+
+
+
     }
 }
