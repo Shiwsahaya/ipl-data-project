@@ -5,20 +5,20 @@ class Services {
     //-------------------no of matches start----------------------
 
     TreeMap<String, Integer> noOfMatches (List<Match> matchList){
-        TreeMap<String, Integer> map = new TreeMap<>();
+        TreeMap<String, Integer> noOfMatchesMap = new TreeMap<>();
         matchList.forEach(match -> {
             //System.out.println(match.getSession());
-            if(map.containsKey(Integer.toString(match.getSession())))
+            if(noOfMatchesMap.containsKey(Integer.toString(match.getSession())))
             {
-                int tmpValue=map.get(Integer.toString(match.getSession()));
-                map.put(Integer.toString(match.getSession()),tmpValue+1);
+                int tmpValue=noOfMatchesMap.get(Integer.toString(match.getSession()));
+                noOfMatchesMap.put(Integer.toString(match.getSession()),tmpValue+1);
             }
             else
             {
-                map.put(Integer.toString(match.getSession()),1);
+                noOfMatchesMap.put(Integer.toString(match.getSession()),1);
             }
         });
-        return map;
+        return noOfMatchesMap;
     }
 
     //-------------------no of matches end-------------------------
@@ -27,19 +27,19 @@ class Services {
     //-------------------no of won matches start-------------------------
 
     TreeMap<String, Integer> noOfWonMatches (List<Match> matchList){
-        TreeMap<String, Integer> map = new TreeMap<>();
+        TreeMap<String, Integer> noOfWonMap = new TreeMap<>();
         matchList.forEach(match -> {
             if(!match.getWinnerTeam().equals(""))
             {
-                if (map.containsKey(match.getWinnerTeam())) {
-                    int tmpValue = map.get(match.getWinnerTeam());
-                    map.put(match.getWinnerTeam(), tmpValue + 1);
+                if (noOfWonMap.containsKey(match.getWinnerTeam())) {
+                    int tmpValue = noOfWonMap.get(match.getWinnerTeam());
+                    noOfWonMap.put(match.getWinnerTeam(), tmpValue + 1);
                 } else {
-                    map.put(match.getWinnerTeam(), 1);
+                    noOfWonMap.put(match.getWinnerTeam(), 1);
                 }
             }
         });
-        return map;
+        return noOfWonMap;
 
     }
 
