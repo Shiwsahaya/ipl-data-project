@@ -9,23 +9,26 @@ public class Main {
     public static void main(String[] arsg) throws SQLException {
         Con ob=new Con();
         Connection con=ob.createConnection();
-        Statement noOfMatchStatement= con.createStatement();
-        Statement noOfWonMatchStatement= con.createStatement();
-        Statement extraRunStatement= con.createStatement();
-        Statement bestBowlerStatement= con.createStatement();
-
-        ResultSet noOfMatchRS=noOfMatchStatement.executeQuery(Constants.noOfMatch);
-        ResultSet noOfWonMatchRS=noOfWonMatchStatement.executeQuery(Constants.noOfWonMatch);
-        ResultSet extraRunRS=extraRunStatement.executeQuery(Constants.extraRun);
-        ResultSet bewBowlerRS=bestBowlerStatement.executeQuery(Constants.topBowler);
+        PreparedStatement noOfMatchPS=con.prepareStatement(Constants.NO_OF_MATCHES);
+        ResultSet noOfMatchRS=noOfMatchPS.executeQuery();
         queryResult(noOfMatchRS);
         out.println("*******************************************************");
+
+        PreparedStatement noOfWonMatchPS=con.prepareStatement(Constants.NO_OF_WON_MATCHES);
+        ResultSet noOfWonMatchRS=noOfWonMatchPS.executeQuery();
         queryResult(noOfWonMatchRS);
         out.println("*******************************************************");
+
+        PreparedStatement extraRunPS=con.prepareStatement(Constants.EXTRA_RUN);
+        extraRunPS.setString(1,Constants.YEAR_16);
+        ResultSet extraRunRS=extraRunPS.executeQuery();
         queryResult(extraRunRS);
         out.println("*******************************************************");
-        queryResult(bewBowlerRS);
+
+        PreparedStatement bestBowlerPS=con.prepareStatement(Constants.TOP_BOWLER);
+        bestBowlerPS.setString(1,Constants.YEAR_15);
+        ResultSet bestBowlerRS=bestBowlerPS.executeQuery();
+        queryResult(bestBowlerRS);
         out.println("*******************************************************");
-        con.close();
     }
 }
