@@ -1,6 +1,9 @@
 import java.sql.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import static java.lang.System.out;
+
 public class Main {
     private static void printResult(LinkedHashMap<?, ?> data)
     {
@@ -14,8 +17,14 @@ public class Main {
        return parseLine(sql,str);
    }
    private static LinkedHashMap<String,String>parseLine( String sql, String change) throws SQLException {
-       Con ob=new Con();
-       Connection con=ob.createConnection();
+       Connection con=null;
+       try{
+           Class.forName("org.postgresql.Driver");
+           con =  DriverManager.getConnection(Constants.URL, Constants.USER, Constants.PASSWORD);
+           if(con==null)
+               System.out.println("Database not Connected");
+       }catch(Exception e){ out.println(e);
+       }
        LinkedHashMap<String ,String>queryResult=new LinkedHashMap<>();
        PreparedStatement preparedStatement=con.prepareStatement(sql);
        ResultSet resultSet;
