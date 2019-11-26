@@ -8,7 +8,5 @@
      static final  String PASSWORD="2214@11";
      static final  String YEAR_16="2016";
      static final  String YEAR_15="2015";
-     static final int limit=10;
-
 
 }
