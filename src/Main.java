@@ -27,6 +27,7 @@ public class Main {
 
         PreparedStatement bestBowlerPS=con.prepareStatement(Constants.TOP_BOWLER);
         bestBowlerPS.setString(1,Constants.YEAR_15);
+        bestBowlerPS.setInt(2,Constants.limit);
         ResultSet bestBowlerRS=bestBowlerPS.executeQuery();
         queryResult(bestBowlerRS);
         out.println("*******************************************************");
