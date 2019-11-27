@@ -59,20 +59,19 @@ public class Main {
     }
 
 
-        private static List<Deliveries> getDeliveries () throws IOException, CsvException {
-            List<String[]> csvList = parseCSV(Constants.FILE_DELIVERIES);
-            csvList.remove(0);
-            List<Deliveries> deliveriesList = new ArrayList<>();
-            for (String[] line : csvList) {
-                Deliveries deliveries = new Deliveries();
-                deliveries.setDeliveriesId(Integer.parseInt(line[Constants.MATCHES_ID]));
-                deliveries.setBowlingTeam(line[Constants.BOWLING_TEAM]);
-                deliveries.setBowlerName(line[Constants.BOWLER_NAME]);
-                deliveries.setExtraRun(Integer.parseInt(line[Constants.EXTRA_RUN]));
-                deliveries.setTotalRun(Integer.parseInt(line[Constants.TOTAL_RUN]));
-                deliveriesList.add(deliveries);
-            }
-            return deliveriesList;
+    private static List<Deliveries> getDeliveries () throws IOException, CsvException {
+        List<String[]> csvList = parseCSV(Constants.FILE_DELIVERIES);
+        csvList.remove(0);
+        List<Deliveries> deliveriesList = new ArrayList<>();
+        for (String[] line : csvList) {
+            Deliveries deliveries = new Deliveries();
+            deliveries.setDeliveriesId(Integer.parseInt(line[Constants.MATCHES_ID]));
+            deliveries.setBowlingTeam(line[Constants.BOWLING_TEAM]);
+            deliveries.setBowlerName(line[Constants.BOWLER_NAME]);
+            deliveries.setExtraRun(Integer.parseInt(line[Constants.EXTRA_RUN]));
+            deliveries.setTotalRun(Integer.parseInt(line[Constants.TOTAL_RUN]));
+            deliveriesList.add(deliveries);
         }
+        return deliveriesList;
     }
-
+}
