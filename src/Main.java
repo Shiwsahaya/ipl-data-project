@@ -1,7 +1,6 @@
 import java.sql.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import static java.lang.System.out;
 
 public class Main {
@@ -12,21 +11,22 @@ public class Main {
         }
         System.out.println("*****************************************************************************");
     }
-   private static LinkedHashMap<String ,String>parseLine(String sql) throws SQLException {
+   private static LinkedHashMap<String ,String> executeQuery(String sql) throws SQLException {
        String str="";
-       return parseLine(sql,str);
+       return executeQuery(sql,str);
    }
-   private static LinkedHashMap<String,String>parseLine( String sql, String change) throws SQLException {
-       Connection con=null;
+   private static LinkedHashMap<String,String> executeQuery(String sql, String change) throws SQLException {
+       Connection connection=null;
        try{
            Class.forName("org.postgresql.Driver");
-           con =  DriverManager.getConnection(Constants.URL, Constants.USER, Constants.PASSWORD);
-           if(con==null)
+           connection =  DriverManager.getConnection(Constants.URL, Constants.USER, Constants.PASSWORD);
+           if(connection==null)
                System.out.println("Database not Connected");
        }catch(Exception e){ out.println(e);
        }
        LinkedHashMap<String ,String>queryResult=new LinkedHashMap<>();
-       PreparedStatement preparedStatement=con.prepareStatement(sql);
+       assert connection != null;
+       PreparedStatement preparedStatement=connection.prepareStatement(sql);
        ResultSet resultSet;
       if(change.equals(""))
       {
@@ -41,20 +41,24 @@ public class Main {
        {
            queryResult.put(resultSet.getString(1),resultSet.getString(2));
        }
-      return queryResult;
+       connection.close();
+       preparedStatement.close();
+       resultSet.close();
+       return queryResult;
    }
     public static void main(String[] args) throws SQLException {
         LinkedHashMap<String,String> mapForResult;
-        mapForResult=parseLine(Constants.NO_OF_MATCHES);
+        mapForResult= executeQuery(Constants.NO_OF_MATCHES);
         printResult(mapForResult);
 
-        mapForResult=parseLine(Constants.NO_OF_WON_MATCHES);
+        mapForResult= executeQuery(Constants.NO_OF_WON_MATCHES);
         printResult(mapForResult);
 
-        mapForResult=parseLine(Constants.EXTRA_RUN,Constants.YEAR_16);
+        mapForResult= executeQuery(Constants.EXTRA_RUN,Constants.YEAR_16);
         printResult(mapForResult);
 
-        mapForResult=parseLine(Constants.TOP_BOWLER,Constants.YEAR_15);
+        mapForResult= executeQuery(Constants.TOP_BOWLER,Constants.YEAR_15);
         printResult(mapForResult);
+
     }
 }
