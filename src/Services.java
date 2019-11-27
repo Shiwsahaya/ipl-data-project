@@ -17,15 +17,11 @@ public class Services {
         assert connection != null;
         PreparedStatement preparedStatement=connection.prepareStatement(sql);
         ResultSet resultSet;
-        if(change.equals(""))
-        {
-            resultSet=preparedStatement.executeQuery();
-        }
-        else
+        if(!change.equals(""))
         {
             preparedStatement.setString(1,change);
-            resultSet=preparedStatement.executeQuery();
         }
+        resultSet=preparedStatement.executeQuery();
         while (resultSet.next())
         {
             queryResult.put(resultSet.getString(1),resultSet.getString(2));
